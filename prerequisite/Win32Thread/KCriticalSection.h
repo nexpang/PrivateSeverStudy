@@ -8,6 +8,8 @@ struct KCriticalSection : public CRITICAL_SECTION
     DESTRUCTOR          ~KCriticalSection( ) { DeleteCriticalSection( this ); }
 };
 
+//class KCriticalSectionLock
+/*
 class KCriticalSectionLock
 {
 public:
@@ -27,6 +29,24 @@ public:
     explicit            operator bool( ) { return true; }
 protected:
     CRITICAL_SECTION*   m_pcs;
+}; */
+
+class KCriticalSectionLock
+{
+public:
+    KCriticalSectionLock(CRITICAL_SECTION& cs) : m_pcs(&cs)
+    {
+        EnterCriticalSection(m_pcs);
+    }
+
+    ~KCriticalSectionLock()
+    {
+        //printf( "destructor\r\n" );
+        if (m_pcs != nullptr)
+            LeaveCriticalSection(m_pcs);
+    }
+protected:
+    CRITICAL_SECTION* m_pcs;
 };
 
 #define CSLOCK( cs_ )   if( KCriticalSectionLock CONCATENATE( lock_, __LINE__ ) = cs_ )

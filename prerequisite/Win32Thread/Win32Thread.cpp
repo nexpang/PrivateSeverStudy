@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <conio.h>
 #include <iostream>
+#include "KCriticalSection.h";
 
 int g_value = 0;
-CRITICAL_SECTION g_csValue;
+KCriticalSection g_csValue;
 
 DWORD WINAPI ThreadProc(LPVOID);
 
@@ -12,23 +13,24 @@ int main(void)
 {
     HANDLE hThread;
     DWORD i, dwThreadID;
-    InitializeCriticalSection(&g_csValue);
+    //InitializeCriticalSection(&g_csValue);        include KCritical Section
 
     // Create a thread
 
     hThread = CreateThread(
-        NULL,         // default security attributes
-        0,            // default stack size
+        NULL,      
+        0,         
         (LPTHREAD_START_ROUTINE)ThreadProc,
-        NULL,         // no thread function arguments
-        0,            // default creation flags
-        &dwThreadID); // receive thread identifier
+        NULL,      
+        0,        
+        &dwThreadID);
 
     while (true) {
         for (int i = 0; i < 1000000; i++) {
-            EnterCriticalSection(&g_csValue);
+            KCriticalSectionLock lock(g_csValue);
+            // EnterCriticalSection(&g_csValue);    include KCriticalSectionLock
             g_value--;
-            LeaveCriticalSection(&g_csValue);
+            // LeaveCriticalSection(&g_csValue);    include KCriticalSectionLock
         }
         break;
     }
@@ -36,7 +38,7 @@ int main(void)
     _getch();
     std::cout << g_value << std::endl;
 
-    DeleteCriticalSection(&g_csValue);
+    //DeleteCriticalSection(&g_csValue);            include KCritical Section
 
     return 0;
 }
@@ -44,9 +46,8 @@ int main(void)
 DWORD WINAPI ThreadProc(LPVOID ipParam) {
     while (true) {
         for (int i = 0; i < 1000000; i++) {
-            EnterCriticalSection(&g_csValue);
-            g_value++;
-            LeaveCriticalSection(&g_csValue);
+            KCriticalSectionLock lock(g_csValue);
+            g_value++;                          //  critical section
         }
         break;
     }
