@@ -1,6 +1,7 @@
 # PrivateSeverStudy
+
+###공부자료 [유튜브](https://youtube.com/playlist?list=PLrrTotxaO6kgEMm9YYRX-jwHAHhqSt8Ke).
 ```
-//암튼 먼가 할거임 보지마셈
 #include <iostream>
   
 ```
