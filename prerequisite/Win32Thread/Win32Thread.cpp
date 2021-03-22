@@ -27,10 +27,12 @@ int main(void)
 
     while (true) {
         for (int i = 0; i < 1000000; i++) {
-            KCriticalSectionLock lock(g_csValue);
-            // EnterCriticalSection(&g_csValue);    include KCriticalSectionLock
-            g_value--;
-            // LeaveCriticalSection(&g_csValue);    include KCriticalSectionLock
+            CSLOCK(g_csValue){
+                // KCriticalSectionLock lock(g_csValue);
+                // EnterCriticalSection(&g_csValue);    include KCriticalSectionLock
+                g_value--;
+                // LeaveCriticalSection(&g_csValue);    include KCriticalSectionLock
+            }
         }
         break;
     }
@@ -46,8 +48,10 @@ int main(void)
 DWORD WINAPI ThreadProc(LPVOID ipParam) {
     while (true) {
         for (int i = 0; i < 1000000; i++) {
-            KCriticalSectionLock lock(g_csValue);
-            g_value++;                          //  critical section
+            CSLOCK(g_csValue) {
+                // KCriticalSectionLock lock(g_csValue);
+                g_value++;                          //  critical section
+            }
         }
         break;
     }

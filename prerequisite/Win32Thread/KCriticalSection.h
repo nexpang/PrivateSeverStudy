@@ -45,11 +45,12 @@ public:
         if (m_pcs != nullptr)
             LeaveCriticalSection(m_pcs);
     }
+    explicit operator bool() { return true; }
 protected:
     CRITICAL_SECTION* m_pcs;
 };
-
-#define CSLOCK( cs_ )   if( KCriticalSectionLock CONCATENATE( lock_, __LINE__ ) = cs_ )
+#define CSLOCK( cs_ )   if( KCriticalSectionLock  lock = cs_ )
+//#define CSLOCK( cs_ )   if( KCriticalSectionLock CONCATENATE( lock_, __LINE__ ) = cs_ )
 
 /** @exam   KCriticalSection
 #include <iostream>
