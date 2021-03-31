@@ -1,7 +1,5 @@
 #include "common.h"
 
-#pragma warning(disable:4996)
-
 #define PORT_NUM      10200
 #define BLOG_SIZE       5
 #define MAX_MSG_LEN 256
