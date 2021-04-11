@@ -4,7 +4,7 @@
   "description": "this is about my nodejs tutorial",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon expressServer.js"
+    "dev": "nodemon app.js"
   },
   "author": "Kyeonghyuk Kim",
   "license": "ISC",
