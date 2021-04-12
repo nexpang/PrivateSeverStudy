@@ -1,22 +1,13 @@
+<link rel="stylesheet" href="./css/index.css">
 <div class="ui main text container">
-    <h1 class="ui header">chat server</h1>
-    <h1>채팅</h1>
-    <input type="text" id="chatMsg">
-    <button id="btnSend">전송</button>
-
-    <script>
-        const socket = new io();
-
-        const chatMsg = document.querySelector("#chatMsg");
-        document.querySelector("#btnSend").addEventListener("click", e => {
-            let msg = chatMsg.value;
-            socket.emit("chat", { msg });
-
-
-        });
-
-        socket.on("chat-all", data => {
-            console.log(data);
-        });
-    </script>
+    <div class="app__wrap">
+        <div id="info" class="app__info"></div>
+        <div id="chatWindow" class="app__window"></div>
+        <div class="app__input__wrap">
+            <input id="chatInput" type="text" class="app__input" autofocus placeholder="대화를 입력해주세요.">
+            <button id="chatMsgSendBtn" class="app__button">전송</button>
+        </div>
+    </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
