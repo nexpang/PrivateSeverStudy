@@ -18,6 +18,10 @@ socket.on("updateMsg", (data) => {
     else {
         let chatMsgEl = drawChatMessage(data);
         chatWindow.appendChild(chatMsgEl);
+        // chatWindow.animate({
+        //     scrollTop: chatWindow.scrollHeight - chatWindow.clientHeight
+        // }, 100);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 });
 function drawChatMessage(data) {
@@ -45,6 +49,9 @@ let sendBtn = document.getElementById("chatMsgSendBtn");
 let chatInput = document.getElementById("chatInput");
 
 sendBtn.addEventListener("click", () => {
+    iEnter();
+})
+function iEnter() {
     let message = chatInput.value;
 
     if (!message)
@@ -54,4 +61,4 @@ sendBtn.addEventListener("click", () => {
     })
 
     chatInput.value = "";
-})
+}

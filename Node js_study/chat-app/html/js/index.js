@@ -18,6 +18,9 @@ socket.on("updateMsg", (data) => {
     else {
         let chatMsgEl = drawChatMessage(data);
         chatWindow.appendChild(chatMsgEl);
+        // chatWindow.animate({
+        //     scrollTop: chatWindow.scrollHeight - chatWindow.clientHeight
+        // }, 100);
     }
 });
 function drawChatMessage(data) {
