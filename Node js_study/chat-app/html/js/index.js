@@ -21,6 +21,7 @@ socket.on("updateMsg", (data) => {
         // chatWindow.animate({
         //     scrollTop: chatWindow.scrollHeight - chatWindow.clientHeight
         // }, 100);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 });
 function drawChatMessage(data) {

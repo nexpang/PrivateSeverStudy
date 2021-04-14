@@ -52,7 +52,7 @@ io.sockets.on("connection", (socket) => {
     })
 })
 
-server.listen(1234, (err) => {
+server.listen(61848, (err) => {
     if (err)
         return console.log(err);
     console.log("server is listening from port 1234");
