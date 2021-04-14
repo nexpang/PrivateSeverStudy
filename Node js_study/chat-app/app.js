@@ -40,6 +40,6 @@ io.sockets.on("connection", (socket) => {
     })
 })
 
-server.listen(1234, () => {
+server.listen(61847, () => {
     console.log("서버 실행중...");
 })
