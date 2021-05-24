@@ -7,8 +7,6 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5f;
     public float rotateSpeed = 20f;
 
-    public Transform turret;
-
     private PlayerInput playerInput;
     private Rigidbody2D rigidbody2d;
 
@@ -29,8 +27,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        moveDirection = (transform.up * playerInput.frontMove).normalized;
-        
+        moveDirection = (Vector2.up * playerInput.frontMove).normalized;
+        moveDirection += (Vector3.right * playerInput.rightMove).normalized;
+
         transform.rotation *= Quaternion.Euler(0, 0, -playerInput.rightMove * rotateSpeed * Time.deltaTime);
     }
 
@@ -40,9 +39,9 @@ public class PlayerMove : MonoBehaviour
         Vector3 v = target - transform.position;
 
         float degree = Mathf.Atan2(v.x, v.y) * Mathf.Rad2Deg;
-        float rot = Mathf.LerpAngle(turret.eulerAngles.z, -degree, Time.deltaTime * rotateSpeed);
+        float rot = Mathf.LerpAngle(transform.eulerAngles.z, -degree, Time.deltaTime * rotateSpeed);
 
-        turret.eulerAngles = new Vector3(0, 0, rot);
+        transform.eulerAngles = new Vector3(0, 0, rot);
     }
 
     void FixedUpdate()

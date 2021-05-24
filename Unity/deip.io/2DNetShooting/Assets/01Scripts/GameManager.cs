@@ -7,11 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public CanvasGroup canvasGroup;
-    public GameObject[] tankPrefabs;
+    public GameObject tankPrefab;
     public CinemachineVirtualCamera virtualCamera;
 
     public int myId;
-    public TankCategory tank;
 
     private GameObject player;
     Vector3 initPosition;
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
 
                     //생성된 애들에 대해서는 데이터를 갱신한다.
                     PlayerRPC remoteRPC = p.GetComponent<PlayerRPC>();
-                    remoteRPC.SetTransform(tv.point, tv.rotation, tv.turretRotation);
+                    remoteRPC.SetTransform(tv.point, tv.rotation);
                 }
             }
             refreshData = false;
@@ -60,10 +59,11 @@ public class GameManager : MonoBehaviour
     }
 
     private GameObject MakeRemotePlayer(TransformVO data){
-        GameObject remotePlayer = Instantiate(tankPrefabs[(int)data.tank], data.point, Quaternion.identity);
+        GameObject remotePlayer = Instantiate(tankPrefab, data.point, Quaternion.identity);
+        remotePlayer.GetComponent<SpriteRenderer>().color = Color.red;
         PlayerRPC remoteRPC = remotePlayer.GetComponent<PlayerRPC>();
         remoteRPC.SetRemote();
-        remoteRPC.SetTransform(data.point, data.rotation, data.turretRotation);
+        remoteRPC.SetTransform(data.point, data.rotation);
         return remotePlayer;
     }
 
@@ -72,15 +72,14 @@ public class GameManager : MonoBehaviour
         canvasGroup.alpha = 0;
         canvasGroup.interactable = false;
 
-        player = Instantiate(tankPrefabs[(int)tank], initPosition, Quaternion.identity);
+        player = Instantiate(tankPrefab, initPosition, Quaternion.identity);
 
         virtualCamera.Follow = player.transform;
         players.Add(myId, player);
     }
 
-    public void ChangeToGame(Vector3 position, Vector3 rotation, int id, TankCategory tank){
+    public void ChangeToGame(Vector3 position, Vector3 rotation, int id){
         this.myId = id;
-        this.tank = tank;
         this.initPosition = position;
         readyToStart = true;
     }

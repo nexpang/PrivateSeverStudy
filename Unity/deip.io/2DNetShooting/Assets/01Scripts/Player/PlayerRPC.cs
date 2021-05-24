@@ -8,8 +8,6 @@ public class PlayerRPC : MonoBehaviour
     private PlayerMove playerMove;
     private bool isPlayer = true;
 
-    public Transform turret;
-
     private Coroutine sendCoroutine;
     private WaitForSeconds ws = new WaitForSeconds(1/60); //고정프레임간격으로 패킷전송
 
@@ -34,19 +32,17 @@ public class PlayerRPC : MonoBehaviour
             StopCoroutine(sendCoroutine); //플레이어가 아닐경우 데이터를 받을 필요 없으니 꺼준다.
     }
 
-    public void SetTransform(Vector3 position, Vector3 rotation, Vector3 turretRotation)
+    public void SetTransform(Vector3 position, Vector3 rotation)
     {
         transform.position = position;
         transform.rotation = Quaternion.Euler(rotation);
-        turret.rotation = Quaternion.Euler(turretRotation);
     }
 
     IEnumerator SendData(){
         int myId = GameManager.instance.myId;
-        TankCategory tank = GameManager.instance.tank;
         while(true){
             yield return ws;
-            TransformVO vo = new TransformVO(myId, transform.position, transform.rotation.eulerAngles, turret.rotation.eulerAngles, tank);
+            TransformVO vo = new TransformVO(myId, transform.position, transform.rotation.eulerAngles);
             string payload = JsonUtility.ToJson(vo);
 
             DataVO dataVO = new DataVO();
