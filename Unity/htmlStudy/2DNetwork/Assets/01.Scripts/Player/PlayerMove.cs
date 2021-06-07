@@ -51,8 +51,8 @@ public class PlayerMove : MonoBehaviour
         float degree = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
         float rot = Mathf.LerpAngle(
                     turret.eulerAngles.z,
-                    degree,
+                    degree - 90,
                     Time.deltaTime * turretRotateSpeed);
-        turret.eulerAngles = new Vector3(0, 0, rot+90f);
+        turret.eulerAngles = new Vector3(0, 0, rot);
     }
 }

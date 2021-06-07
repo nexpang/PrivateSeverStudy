@@ -4,6 +4,7 @@ using System;
 [Serializable]
 public class TransformVo
 {
+    public string name;
     public Vector3 position;
     public Vector3 rotation;
     public Vector3 turretRotation;

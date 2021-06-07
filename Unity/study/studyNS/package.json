@@ -1,16 +1,15 @@
 {
-  "dependencies": {
-    "g": "^2.0.1",
-    "websocket": "^1.0.33",
-    "ws": "^7.4.5"
-  },
-  "name": "nodeserver",
+  "name": "wsServer",
   "version": "1.0.0",
-  "main": "wsSever.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "ws": "^7.4.6"
+  }
 }
