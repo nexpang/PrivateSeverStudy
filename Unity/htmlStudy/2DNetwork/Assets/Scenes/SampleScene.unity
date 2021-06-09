@@ -1047,6 +1047,7 @@ GameObject:
   - component: {fileID: 640941151}
   - component: {fileID: 640941150}
   - component: {fileID: 640941149}
+  - component: {fileID: 640941153}
   m_Layer: 5
   m_Name: CvsLogin
   m_TagString: Untagged
@@ -1135,6 +1136,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &640941153
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640941148}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &654619756
 GameObject:
   m_ObjectHideFlags: 0
@@ -17281,6 +17294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoPrefab: {fileID: 7010693415620740702, guid: 40cd9b22c5b36334da9c4f9c6be3c925, type: 3}
+  cvsLogin: {fileID: 640941153}
 --- !u!1 &1494991089
 GameObject:
   m_ObjectHideFlags: 0
@@ -17830,6 +17844,8 @@ GameObject:
   - component: {fileID: 1966634015}
   - component: {fileID: 1966634014}
   - component: {fileID: 1966634016}
+  - component: {fileID: 1966634017}
+  - component: {fileID: 1966634018}
   m_Layer: 0
   m_Name: HandlerObject
   m_TagString: Untagged
@@ -17885,3 +17901,27 @@ MonoBehaviour:
   redTankBtn: {fileID: 654619758}
   blueTankBtn: {fileID: 862949097}
   loginBtn: {fileID: 326318549}
+--- !u!114 &1966634017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966634013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 240eba536100ecb408feb1f47cb19d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1966634018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966634013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b61fbf3a15010469023f58264a36b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

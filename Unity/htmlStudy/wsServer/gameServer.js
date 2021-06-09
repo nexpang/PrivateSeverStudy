@@ -3,6 +3,7 @@ const port = 36589;
 
 const LoginHandler = require('./LoginHandler.js');
 const SocketState = require('./SocketState.js');
+const Vector3 = require('./Vector3.js');
 
 let socketIdx = 0;
 let userList = {}; //로그인한 유저들을 관리하는 리스트
@@ -31,6 +32,11 @@ wsService.on("connection", socket=>{
         console.log('소켓 끊김');
         delete connectedSocket[socket.id];
         delete userList[socket.id];
+        wsService.clients.forEach(socket=>{
+            if(socket.state != SocketState.IN_GAME || socket.id === socket.id)
+                return;
+            socket.send(JSON.stringify({type:"DISCONNECT", payload:socket.id}))
+        })
     });
 
     socket.on("message", msg => {
@@ -42,10 +48,30 @@ wsService.on("connection", socket=>{
                 userList[socket.id] = userData;
                 return;
             }
-            //socket.send(JSON.stringify( {type:"CHAT", payload:"Hello Unity"}));
+            if(data.type === "TRANSFORM"){
+                let transformVo = JSON.parse(data.payload);
+                if(userList[transformVo.socketId] !== undefined){
+                    userList[transformVo.socketId].position = transformVo.position;
+                    userList[transformVo.socketId].rotation = transformVo.rotation;
+                    userList[transformVo.socketId].turretRotation = transformVo.turretRotation;
+                }
+            }
         }catch(err){
             console.log('잘못된 요청 발생 : '+msg);
             console.log(err);
         }
     });
 });
+
+setInterval(()=>{
+    let keys = Object.keys(userList);
+    let dataList = []; // 전송할 배열
+    for(let i=0; i<keys.length; i++){
+        dataList.push(userList[keys[i]]);
+    }
+    wsService.clients.forEach(socket=>{
+        if(socket.state != SocketState.IN_GAME)
+            return;
+        socket.send(JSON.stringify({type:"REFRESH", payload:JSON.stringify({dataList})}))
+    })
+}, 200);

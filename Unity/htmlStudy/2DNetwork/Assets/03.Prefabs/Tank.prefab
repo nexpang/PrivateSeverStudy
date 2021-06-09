@@ -217,10 +217,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 90e3e8a5a9296ec4c8a02e40bb83a4b5, type: 3}
   - {fileID: 21300000, guid: f33b9f7824cfc1344bdbbea565b5b60d, type: 3}
   turrets:
-  - {fileID: 21300000, guid: 555ec7c370757c142a6814470fedd96a, type: 3}
   - {fileID: 21300000, guid: d7f3ddeb3781483449436846401337dd, type: 3}
-  bodyRenderer: {fileID: 0}
-  turretRenderer: {fileID: 0}
+  - {fileID: 21300000, guid: 555ec7c370757c142a6814470fedd96a, type: 3}
+  bodyRenderer: {fileID: 7219182821272661048}
+  turretRenderer: {fileID: 7219182821187493478}
   isRemote: 0
 --- !u!50 &7219182821272661050
 Rigidbody2D:

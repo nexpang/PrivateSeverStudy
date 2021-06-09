@@ -8,22 +8,22 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     public GameObject infoPrefab;
-    private CanvasGroup cvsLogin;
+    public CanvasGroup cvsLogin;
 
     private void Awake()
     {
         instance = this;
         PoolManager.CreatePool<InfoUI>(infoPrefab, transform, 8);
-        cvsLogin = GetComponent<CanvasGroup>();
         cvsLogin.alpha = 1;
         cvsLogin.interactable = true;
         cvsLogin.blocksRaycasts = true;
     }
 
-    public static void SetInfoUI(Transform player, string name)
+    public static InfoUI SetInfoUI(Transform player, string name)
     {
         InfoUI ui = PoolManager.GetItem<InfoUI>();
         ui.SetTarget(player, name);
+        return ui;
     }
 
     public static void CloseLoginPanel()

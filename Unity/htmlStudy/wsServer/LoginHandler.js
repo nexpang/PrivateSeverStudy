@@ -1,6 +1,13 @@
 const SocketState = require('./SocketState.js');
 const Vector3 = require('./Vector3');
 
+let respawnPoint = [
+    new Vector3(10,20,0),
+    new Vector3(-10,20,0),
+    new Vector3(-10,-20,0),
+    new Vector3(10,-20,0)
+]
+
 function LoginHandler(data, socket)
 {
     data = JSON.parse(data);
@@ -8,10 +15,11 @@ function LoginHandler(data, socket)
 
     //console.log(tank, name);
     // 랜덤 위치 등장
+    let pos = respawnPoint[Math.floor(Math.random()*respawnPoint.length)];
     socket.state = SocketState.IN_GAME;
 
     let sendData = {
-        position:Vector3.zero,
+        position:pos,
         rotation:Vector3.zero,
         turretRotation:Vector3.zero,
         socketId:socket.id,

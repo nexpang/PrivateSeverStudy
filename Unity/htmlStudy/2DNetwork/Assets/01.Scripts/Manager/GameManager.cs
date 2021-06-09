@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, PlayerRPC> playerList = new Dictionary<int, PlayerRPC>();
 
+    private Queue<int> removeSocketQueue = new Queue<int>();
+
+    private List<TransformVo> dataList;
+    private bool needRefresh = false;
+
     private void Awake()
     {
         if(instance != null)
@@ -34,7 +39,24 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+
+    }
+
+    public static void DisconnectUser(int socketId)
+    {
+        lock(instance.lockObj)
+        {
+            instance.removeSocketQueue.Enqueue(socketId);
+        }
+    }
+
+    public static void SetRefreshData(List<TransformVo> list)
+    {
+        lock (instance.lockObj)
+        {
+            instance.dataList = list;
+            instance.needRefresh = true;
+        }
     }
 
     void Update()
@@ -47,14 +69,51 @@ public class GameManager : MonoBehaviour
 
                 PlayerRPC rpc = PoolManager.GetItem<PlayerRPC>();
                 socketId = data.socketId;
-                rpc.InitPlayer(data.position, data.tank, false);
+                InfoUI ui = UIManager.SetInfoUI(rpc.transform, data.name);
+
+                rpc.InitPlayer(data.position, data.tank, ui, false);
                 followCam.Follow = rpc.transform;
 
-                //UIManager.SetInfoUI()
 
                 gameStart = true;
             }
         }
+        if(needRefresh)
+        {
+            foreach(TransformVo tv in dataList)
+            {
+                if(tv.socketId != socketId)
+                {
+                    PlayerRPC p = null;
+                    playerList.TryGetValue(tv.socketId, out p);
+                    if(p==null)
+                    {
+                        MakeRemotePlayer(tv);
+                    }
+                    else
+                    {
+                        p.SetTransform(tv.position, tv.rotation, tv.turretRotation);
+                    }
+                }
+            }
+            needRefresh = false;
+        }
+
+        while(removeSocketQueue.Count>0)
+        {
+            int socket = removeSocketQueue.Dequeue();
+            playerList[socket].SetDisable();
+            playerList.Remove(socket);
+        }
+    }
+
+    public PlayerRPC MakeRemotePlayer(TransformVo data)
+    {
+        PlayerRPC rpc = PoolManager.GetItem<PlayerRPC>();
+        InfoUI ui = UIManager.SetInfoUI(rpc.transform, data.name);
+        rpc.InitPlayer(data.position, data.tank, ui, true);
+        playerList.Add(data.socketId, rpc);
+        return rpc;
     }
 
     public static void GameStart(TransformVo data)
