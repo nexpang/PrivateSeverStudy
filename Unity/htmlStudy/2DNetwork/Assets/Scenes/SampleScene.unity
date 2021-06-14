@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -16603,6 +16603,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1009865132}
   - component: {fileID: 1009865131}
+  - component: {fileID: 1009865133}
+  - component: {fileID: 1009865134}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16640,6 +16642,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009865133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009865130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4acb978e481ef4096384c05b4c5bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 7951225906651545526, guid: cd54441c124eccd4780cc2c005bdefaa, type: 3}
+--- !u!114 &1009865134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009865130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5999e34223089446a4a9099c5ded66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5706414410801257315, guid: 9c101ec0dcefe60428b31a28528188fd, type: 3}
 --- !u!1 &1136105393
 GameObject:
   m_ObjectHideFlags: 0
@@ -16652,7 +16680,7 @@ GameObject:
   - component: {fileID: 1136105396}
   - component: {fileID: 1136105395}
   - component: {fileID: 1136105394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CamCompiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17846,6 +17874,7 @@ GameObject:
   - component: {fileID: 1966634016}
   - component: {fileID: 1966634017}
   - component: {fileID: 1966634018}
+  - component: {fileID: 1966634019}
   m_Layer: 0
   m_Name: HandlerObject
   m_TagString: Untagged
@@ -17923,5 +17952,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8b61fbf3a15010469023f58264a36b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1966634019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966634013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca94a92138b007c4bbadaee92bdb8389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

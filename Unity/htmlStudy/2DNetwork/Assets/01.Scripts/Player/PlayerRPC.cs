@@ -13,6 +13,7 @@ public class PlayerRPC : MonoBehaviour
 
     private PlayerInput input;
     private PlayerMove move;
+    private PlayerFire playerFire;
 
     private TankCategory tankCategory;
 
@@ -30,6 +31,7 @@ public class PlayerRPC : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         move = GetComponent<PlayerMove>();
+        playerFire = GetComponent<PlayerFire>();
     }
 
     public void InitPlayer(Vector3 pos, TankCategory tank, InfoUI ui, bool remote = false)
@@ -44,13 +46,17 @@ public class PlayerRPC : MonoBehaviour
         {
             input.enabled = false;
             move.enabled = false;
+            gameObject.layer = GameManager.EnemyLayer;
         }
         else
         {
             input.enabled = true;
             move.enabled = true;
+            gameObject.layer = GameManager.PlayerLayer;
+            move.SetMoveScript( GameManager.tankDataDic[tank] );
             StartCoroutine(SendData());
         }
+        playerFire.SetFireScript(GameManager.tankDataDic[tank], remote);
     }
 
     IEnumerator SendData()

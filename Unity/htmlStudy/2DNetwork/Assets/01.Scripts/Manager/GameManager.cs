@@ -27,6 +27,20 @@ public class GameManager : MonoBehaviour
     private List<TransformVo> dataList;
     private bool needRefresh = false;
 
+    public static int PlayerLayer;
+    public static int EnemyLayer;
+
+    public static Dictionary<TankCategory, TankDataVO> tankDataDic = new Dictionary<TankCategory, TankDataVO>();
+
+    public static void InitGameData(string payload)
+    {
+        List<TankDataVO> list = JsonUtility.FromJson<TankDataListVO>(payload).tanks;
+        foreach(TankDataVO t in list)
+        {
+            tankDataDic.Add(t.tank, t);
+        }
+    }
+
     private void Awake()
     {
         if(instance != null)
@@ -35,6 +49,9 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         PoolManager.CreatePool<PlayerRPC>(tankPrefab, transform, 8);
+
+        PlayerLayer = LayerMask.NameToLayer("Player");
+        EnemyLayer = LayerMask.NameToLayer("Enemy");
     }
 
     void Start()

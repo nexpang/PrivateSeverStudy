@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
     private void Move()
     {
         moveDirection = (transform.up * playerInput.frontMove).normalized;
-        transform.rotation *= Quaternion.Euler(0,0,-playerInput.rightMove * rotateSpeed * Time.deltaTime);
+        transform.rotation *= Quaternion.Euler(0, 0, -playerInput.rightMove * rotateSpeed * Time.deltaTime);
     }
 
     private void Rotate()
@@ -54,5 +54,12 @@ public class PlayerMove : MonoBehaviour
                     degree - 90,
                     Time.deltaTime * turretRotateSpeed);
         turret.eulerAngles = new Vector3(0, 0, rot);
+    }
+
+    public void SetMoveScript(TankDataVO data)
+    {
+        speed = data.movingSpeed;
+        rotateSpeed = data.rotateSpeed;
+        turretRotateSpeed = data.rotateSpeed;
     }
 }

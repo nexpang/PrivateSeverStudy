@@ -33,6 +33,7 @@ public class SocketClient : MonoBehaviour
         handlerDictionary.Add("LOGIN", handers.GetComponent<LoginHandler>());
         handlerDictionary.Add("REFRESH", handers.GetComponent<RefreshHandler>());
         handlerDictionary.Add("DISCONNECT", handers.GetComponent<DisconnectHandler>());
+        handlerDictionary.Add("INITDATA", handers.GetComponent<InitHandler>());
 
         webSocket = new WebSocket($"{url}:{port}");
         webSocket.Connect();
