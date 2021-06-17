@@ -17875,6 +17875,8 @@ GameObject:
   - component: {fileID: 1966634017}
   - component: {fileID: 1966634018}
   - component: {fileID: 1966634019}
+  - component: {fileID: 1966634020}
+  - component: {fileID: 1966634021}
   m_Layer: 0
   m_Name: HandlerObject
   m_TagString: Untagged
@@ -17964,5 +17966,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca94a92138b007c4bbadaee92bdb8389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1966634020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966634013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 309ff65c87415114ba80feb1b78dc614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1966634021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966634013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4bf0b646b6b4454ebcfd260034c5eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

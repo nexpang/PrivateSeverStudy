@@ -14,10 +14,11 @@ public class PlayerRPC : MonoBehaviour
     private PlayerInput input;
     private PlayerMove move;
     private PlayerFire playerFire;
+    private PlayerHealth health;
 
     private TankCategory tankCategory;
 
-    private WaitForSeconds ws = new WaitForSeconds(1 / 5);
+    private WaitForSeconds ws = new WaitForSeconds(1f / 10f);
 
     private Vector3 targetPosition;
     private Vector3 targetRotation;
@@ -32,6 +33,7 @@ public class PlayerRPC : MonoBehaviour
         input = GetComponent<PlayerInput>();
         move = GetComponent<PlayerMove>();
         playerFire = GetComponent<PlayerFire>();
+        health = GetComponent<PlayerHealth>();
     }
 
     public void InitPlayer(Vector3 pos, TankCategory tank, InfoUI ui, bool remote = false)
@@ -56,6 +58,7 @@ public class PlayerRPC : MonoBehaviour
             move.SetMoveScript( GameManager.tankDataDic[tank] );
             StartCoroutine(SendData());
         }
+        health.SetHealthScript(GameManager.tankDataDic[tank], remote, ui);
         playerFire.SetFireScript(GameManager.tankDataDic[tank], remote);
     }
 
@@ -107,5 +110,11 @@ public class PlayerRPC : MonoBehaviour
         gameObject.SetActive(false);
         ui.gameObject.SetActive(false);
 
+    }
+
+    public void SetHp(int hp)
+    {
+        health.currentHP = hp;
+        health.UpdateUI();
     }
 }

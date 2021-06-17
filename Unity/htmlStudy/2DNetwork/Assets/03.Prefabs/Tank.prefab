@@ -254,7 +254,7 @@ MonoBehaviour:
   bodyRenderer: {fileID: 7219182821272661048}
   turretRenderer: {fileID: 7219182821187493478}
   isRemote: 0
-  lerpSpeed: 4
+  lerpSpeed: 17
 --- !u!50 &7219182821272661050
 Rigidbody2D:
   serializedVersion: 4
@@ -315,5 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 8162184976507244709}
+  turretTrm: {fileID: 7219182821187493477}
   timeBetFire: 1
   lastFireTime: 0

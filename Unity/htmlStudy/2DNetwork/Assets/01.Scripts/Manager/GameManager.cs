@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     private Queue<int> removeSocketQueue = new Queue<int>();
 
+    public Queue<HitVO> hitQueue = new Queue<HitVO>();
+
     private List<TransformVo> dataList;
     private bool needRefresh = false;
 
@@ -122,6 +124,14 @@ public class GameManager : MonoBehaviour
             playerList[socket].SetDisable();
             playerList.Remove(socket);
         }
+
+        while(hitQueue.Count > 0)
+        {
+            HitVO hit = hitQueue.Dequeue();
+            PlayerRPC rpc =  playerList[hit.socketId];
+
+            rpc.SetHp(hit.hp);
+        }
     }
 
     public PlayerRPC MakeRemotePlayer(TransformVo data)
@@ -140,6 +150,19 @@ public class GameManager : MonoBehaviour
         lock(instance.lockObj)
         {
             instance.data = data;
+        }
+    }
+
+    public PlayerRPC GetPlayerRPC(int socketId)
+    {
+        return playerList[socketId];
+    }
+
+    public static void RecordHitInfo(HitVO vo)
+    {
+        lock(instance.lockObj)
+        {
+            instance.hitQueue.Enqueue(vo);
         }
     }
 }
