@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 7010693415620740701}
   - component: {fileID: 7010693415620740699}
   - component: {fileID: 7010693415620740700}
+  - component: {fileID: 3844039880829045228}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -292,3 +293,16 @@ MonoBehaviour:
   playerTrm: {fileID: 0}
   followSpeed: 50
   txtName: {fileID: 7010693413929158702}
+  hpBar: {fileID: 7010693413945858609}
+--- !u!225 &3844039880829045228
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010693415620740702}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public int socketId;
+    private PlayerRPC rpc;
+
+    [Header("게임오버관련 UI")]
+    public CanvasGroup overPanel;
+    public Text overText;
 
     public object lockObj = new object(); // 데이터 락킹을 위한 오브젝트
 
@@ -25,6 +32,10 @@ public class GameManager : MonoBehaviour
     private Queue<int> removeSocketQueue = new Queue<int>();
 
     public Queue<HitVO> hitQueue = new Queue<HitVO>();
+
+    public Queue<DeadVO> deadQueue = new Queue<DeadVO>();
+
+    public Queue<int> respawnQueue = new Queue<int>();
 
     private List<TransformVo> dataList;
     private bool needRefresh = false;
@@ -86,7 +97,7 @@ public class GameManager : MonoBehaviour
             {
                 UIManager.CloseLoginPanel();
 
-                PlayerRPC rpc = PoolManager.GetItem<PlayerRPC>();
+                rpc = PoolManager.GetItem<PlayerRPC>();
                 socketId = data.socketId;
                 InfoUI ui = UIManager.SetInfoUI(rpc.transform, data.name);
 
@@ -109,7 +120,7 @@ public class GameManager : MonoBehaviour
                     {
                         MakeRemotePlayer(tv);
                     }
-                    else
+                    else if(!p.isDead)
                     {
                         p.SetTransform(tv.position, tv.rotation, tv.turretRotation);
                     }
@@ -131,6 +142,21 @@ public class GameManager : MonoBehaviour
             PlayerRPC rpc =  playerList[hit.socketId];
 
             rpc.SetHp(hit.hp);
+        }
+
+        while (deadQueue.Count > 0)
+        {
+            DeadVO dead = deadQueue.Dequeue();
+            PlayerRPC rpc = playerList[dead.socketId];
+            
+            rpc.Die();
+        }
+
+        while(respawnQueue.Count>0)
+        {
+            int socId = respawnQueue.Dequeue();
+            PlayerRPC rpc = playerList[socId];
+            rpc.Respawn();
         }
     }
 
@@ -164,5 +190,48 @@ public class GameManager : MonoBehaviour
         {
             instance.hitQueue.Enqueue(vo);
         }
+    }
+
+    public static void DeadPlayerRPC(DeadVO vo)
+    {
+        lock (instance.lockObj)
+        {
+            instance.deadQueue.Enqueue(vo);
+        }
+    }
+
+    public static void RespawnPlayerRPC(int socId)
+    {
+        lock (instance.lockObj)
+        {
+            instance.respawnQueue.Enqueue(socId);
+        }
+    }
+
+    public void SetPlayerDead()
+    {
+        DOTween.To(
+            () => overPanel.alpha,
+            value => overPanel.alpha = value,
+            1f,
+            1f
+        );
+        StartCoroutine(CountDown());
+    }
+
+    IEnumerator CountDown()
+    {
+        for (int i = 10; i >= 0 ; i--)
+        {
+            overText.text = $"You Die..\nWait for <color='#dd0000'>{i}</color> sec to respawn";
+            yield return new WaitForSeconds(1f);
+        }
+        rpc.Respawn();
+        DOTween.To(
+            () => overPanel.alpha,
+            value => overPanel.alpha = value,
+            0f,
+            1f
+        );
     }
 }

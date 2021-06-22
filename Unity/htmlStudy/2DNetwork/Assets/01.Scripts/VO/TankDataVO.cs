@@ -9,6 +9,6 @@ public class TankDataVO
     public float movingSpeed;
     public float rotateSpeed;
     public float turretRotateSpeed;
-    public int maxHP;
+    public int maxHp;
     public float bulletSpeed;
 }

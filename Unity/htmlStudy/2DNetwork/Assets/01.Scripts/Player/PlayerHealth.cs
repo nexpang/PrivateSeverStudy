@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void SetHealthScript(TankDataVO data, bool isEnemy, InfoUI ui)
     {
-        maxHP = data.maxHP;
+        maxHP = data.maxHp;
         currentHP = maxHP;
         this.isEnemy = isEnemy;
         this.ui = ui;
@@ -48,13 +48,25 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     /// </summary>
     public void UpdateUI()
     {
-        
+        ui.UpdateHPBar((float)currentHP / (float)maxHP);
     }
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        MassiveExplosion mExp = EffectManager.GetMassiveExplosion();
+        mExp.ResetPos(transform.position);
 
+        //gameObject.SetActive(false);
+        //ui.gameObject.SetActive(false);
 
+        DeadVO vo = new DeadVO(GameManager.instance.socketId);
+        string payload = JsonUtility.ToJson(vo);
+        DataVO dataVO = new DataVO();
+        dataVO.type = "DEAD";
+        dataVO.payload = payload;
+        SocketClient.SendDataToSocket(JsonUtility.ToJson(dataVO));
+
+        GameManager.instance.SetPlayerDead();
+        rpc.SetScript(false);
     }
 }

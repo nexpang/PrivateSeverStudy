@@ -2,10 +2,10 @@ const SocketState = require('./SocketState.js');
 const Vector3 = require('./Vector3');
 
 let respawnPoint = [
-    new Vector3(10,20,0),
-    new Vector3(-10,20,0),
-    new Vector3(-10,-20,0),
-    new Vector3(10,-20,0)
+    new Vector3(0,0,0),
+    new Vector3(15,15,0),
+    new Vector3(-15,-18,0),
+    new Vector3(15,-18,0)
 ]
 
 function LoginHandler(data, socket)

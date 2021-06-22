@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 7219182821272661050}
   - component: {fileID: 7219182821272661053}
   - component: {fileID: 4882983705240817603}
+  - component: {fileID: 7418011884947671817}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -318,3 +319,19 @@ MonoBehaviour:
   turretTrm: {fileID: 7219182821187493477}
   timeBetFire: 1
   lastFireTime: 0
+--- !u!114 &7418011884947671817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219182821272661047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e2c7f9a157e134a9d3592873ad6cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHP: 0
+  isEnemy: 0
+  ui: {fileID: 0}

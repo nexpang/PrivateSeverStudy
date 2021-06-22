@@ -2,7 +2,7 @@ const tankData = {
     tanks:[
         {
             "tank":0,
-            "thimeBerFire":2.0,
+            "timeBetFire":2.0,
             "damage":3,
             "movingSpeed":2.0,
             "rotateSpeed":30.0,
@@ -12,7 +12,7 @@ const tankData = {
         },
         {
             "tank":1,
-            "thimeBerFire":1.0,
+            "timeBetFire":1.0,
             "damage":1,
             "movingSpeed":3.5,
             "rotateSpeed":30.0,

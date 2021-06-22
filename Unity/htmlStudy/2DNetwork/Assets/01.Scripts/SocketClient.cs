@@ -11,7 +11,7 @@ public class SocketClient : MonoBehaviour
 
     private WebSocket webSocket; // 웹 소켓 인스턴스
 
-    private static SocketClient instance;
+    public static SocketClient instance;
 
     public static void SendDataToSocket(string json)
     {
@@ -35,16 +35,22 @@ public class SocketClient : MonoBehaviour
         handlerDictionary.Add("DISCONNECT", handers.GetComponent<DisconnectHandler>());
         handlerDictionary.Add("INITDATA", handers.GetComponent<InitHandler>());
         handlerDictionary.Add("FIRE", handers.GetComponent<FireHandler>());
+        handlerDictionary.Add("HIT", handers.GetComponent<HitHandler>());
+        handlerDictionary.Add("DEAD", handers.GetComponent<DeadHandler>());
+        handlerDictionary.Add("RESPAWN", handers.GetComponent<RespawnHandler>());
 
-        webSocket = new WebSocket($"{url}:{port}");
+    }
+
+    public void ConnectSocket(string ip, string port)
+    {
+        webSocket = new WebSocket($"{ip}:{port}");
         webSocket.Connect();
 
+        //webSocketState.
         webSocket.OnMessage += (sender, e) =>
         {
             ReceiveData((WebSocket)sender, e);
         };
-
-        webSocket.Send("CHAT:Hello WebServer");
     }
 
     private void ReceiveData(WebSocket sender, MessageEventArgs e)
@@ -84,6 +90,7 @@ public class SocketClient : MonoBehaviour
 
     private void OnDestroy()
     {
-        webSocket.Close();
+        if(webSocket.ReadyState == WebSocketState.Connecting)
+            webSocket.Close();
     }
 }

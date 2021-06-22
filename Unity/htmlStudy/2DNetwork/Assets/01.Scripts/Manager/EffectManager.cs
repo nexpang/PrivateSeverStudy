@@ -5,10 +5,12 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour
 {
     public GameObject explosionPrefab;
+    public GameObject massiveExplosionPrefab;
 
     private void Awake()
     {
         PoolManager.CreatePool<Explosion>(explosionPrefab, transform, 10);
+        PoolManager.CreatePool<MassiveExplosion>(massiveExplosionPrefab, transform, 10);
     }
 
     public static Explosion GetExplosion()
@@ -16,14 +18,8 @@ public class EffectManager : MonoBehaviour
         return PoolManager.GetItem<Explosion>();
     }
 
-    void Start()
+    public static MassiveExplosion GetMassiveExplosion()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return PoolManager.GetItem<MassiveExplosion>();
     }
 }

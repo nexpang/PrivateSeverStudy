@@ -59,8 +59,7 @@ wsService.on("connection", socket=>{
                     userList[transformVo.socketId].turretRotation = transformVo.turretRotation;
                 }
             }
-
-            if(data.type === "FIRE" || data.type === "HIT"){
+            if(data.type === "FIRE" || data.type === "HIT"||data.type==="DEAD"||data.type==="RESPAWN"){
                 //let fireInfo = JSON.parse(data.payload);
                 broadcast(msg, socket);
                 return;

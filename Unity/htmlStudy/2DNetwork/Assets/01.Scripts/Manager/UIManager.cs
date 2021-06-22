@@ -10,6 +10,13 @@ public class UIManager : MonoBehaviour
     public GameObject infoPrefab;
     public CanvasGroup cvsLogin;
 
+    public static void OpenLoginPanel()
+    {
+        instance.cvsLogin.alpha = 1;
+        instance.cvsLogin.interactable = true;
+        instance.cvsLogin.blocksRaycasts = true;
+    }
+
     private void Awake()
     {
         instance = this;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    private ParticleSystem particle;
+    protected ParticleSystem particle;
 
-    private void Awake()
+    protected void Awake()
     {
         particle = GetComponent<ParticleSystem>();
     }
@@ -22,7 +22,7 @@ public class Explosion : MonoBehaviour
         Invoke("SetDisable", 3f);
     }
 
-    private void SetDisable()
+    protected void SetDisable()
     {
         gameObject.SetActive(false);
     }

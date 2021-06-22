@@ -28,12 +28,19 @@ public class PlayerRPC : MonoBehaviour
 
     private InfoUI ui = null;
 
+    public bool isDead = false;
+
+    private BoxCollider2D boxCollider;
+    private SpriteRenderer[] renderers;
+
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         move = GetComponent<PlayerMove>();
         playerFire = GetComponent<PlayerFire>();
         health = GetComponent<PlayerHealth>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        renderers = GetComponentsInChildren<SpriteRenderer>();
     }
 
     public void InitPlayer(Vector3 pos, TankCategory tank, InfoUI ui, bool remote = false)
@@ -42,6 +49,8 @@ public class PlayerRPC : MonoBehaviour
         turretRenderer.sprite = turrets[(int)tank];
         tankCategory = tank;
         this.ui = ui;
+
+        gameObject.transform.position = pos;
 
         isRemote = remote;
         if(isRemote)
@@ -116,5 +125,45 @@ public class PlayerRPC : MonoBehaviour
     {
         health.currentHP = hp;
         health.UpdateUI();
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        MassiveExplosion mExp = EffectManager.GetMassiveExplosion();
+        mExp.ResetPos(transform.position);
+
+        //gameObject.SetActive(false);
+        //ui.gameObject.SetActive(false);
+
+        SetScript(false);
+    }
+
+    public void SetScript(bool on)
+    {
+        input.enabled = on && !isRemote;
+        boxCollider.enabled = on;
+        foreach(SpriteRenderer s in renderers)
+        {
+            s.enabled = on;
+        }
+        ui.SetVisible(on);
+    }
+
+    public void Respawn()
+    {
+        SetScript(true);
+        health.currentHP = health.maxHP;
+        health.UpdateUI();
+        isDead = false;
+
+        if(!isRemote)
+        {
+            DataVO vo = new DataVO();
+            vo.type = "RESPAWN";
+            vo.payload = GameManager.instance.socketId + "";
+
+            SocketClient.SendDataToSocket(JsonUtility.ToJson(vo));
+        }
     }
 }
