@@ -8,5 +8,5 @@ public interface IDamageable
     /// 피격 처리 매서드
     /// </summary>
     /// <param name="damage"> 피격시 들어갈 데미지</param>
-    public void OnDamage(int damage, Vector2 powerDir, bool isEnemy);
+    public void OnDamage(int damage, Vector2 powerDir, bool isEnemy, int shooterId);
 }

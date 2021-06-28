@@ -48,18 +48,19 @@ public class PlayerFire : MonoBehaviour
 
     public void Fire()
     {
+        int socketId = GameManager.instance.socketId;
         switch (tankc)
         {
             case TankCategory.Blue:
                 BulletController bc = BulletManager.GetBullet();
-                bc.ResetData(firePos.position, firePos.up, bulletSpeed, bulletDamage, isEnemy);
+                bc.ResetData(socketId,firePos.position, firePos.up, bulletSpeed, bulletDamage, isEnemy);
                 SendFireData(firePos.position, firePos.up, bulletSpeed, bulletDamage);
                 break;
             case TankCategory.Red:
                 for (int i = 0; i < 2; i++)
                 {
                     BulletController bc2 = BulletManager.GetBullet();
-                    bc2.ResetData(firePos.position + firePos.right*(i*0.3f-0.15f), firePos.up, bulletSpeed, bulletDamage, isEnemy);
+                    bc2.ResetData(socketId,firePos.position + firePos.right*(i*0.3f-0.15f), firePos.up, bulletSpeed, bulletDamage, isEnemy);
                     SendFireData(firePos.position + firePos.right * (i * 0.3f - 0.15f), firePos.up, bulletSpeed, bulletDamage);
                 }
                 break;

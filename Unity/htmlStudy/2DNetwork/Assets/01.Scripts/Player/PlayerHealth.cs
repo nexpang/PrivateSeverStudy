@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         this.ui = ui;
     }
 
-    public void OnDamage(int damage, Vector2 powerDir, bool isEnemy)
+    public void OnDamage(int damage, Vector2 powerDir, bool isEnemy, int shooterId)
     {
         if (rpc.isRemote) return;
         currentHP -= damage;
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if(currentHP <= 0)
         {
-            Die();
+            Die(shooterId);
         }
     }
 
@@ -51,15 +51,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         ui.UpdateHPBar((float)currentHP / (float)maxHP);
     }
 
-    public void Die()
+    public void Die(int shooterId)
     {
+        if (rpc.isDead) return;
         MassiveExplosion mExp = EffectManager.GetMassiveExplosion();
         mExp.ResetPos(transform.position);
 
         //gameObject.SetActive(false);
         //ui.gameObject.SetActive(false);
 
-        DeadVO vo = new DeadVO(GameManager.instance.socketId);
+        DeadVO vo = new DeadVO(GameManager.instance.socketId, shooterId);
         string payload = JsonUtility.ToJson(vo);
         DataVO dataVO = new DataVO();
         dataVO.type = "DEAD";
@@ -67,6 +68,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         SocketClient.SendDataToSocket(JsonUtility.ToJson(dataVO));
 
         GameManager.instance.SetPlayerDead();
+        rpc.isDead = true;
         rpc.SetScript(false);
     }
 }

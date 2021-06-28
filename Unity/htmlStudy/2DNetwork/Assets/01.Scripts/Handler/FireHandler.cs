@@ -25,7 +25,7 @@ public class FireHandler : MonoBehaviour, IMsgHandler
             {
                 FireVO vo = dataQueue.Dequeue();
                 BulletController bc = BulletManager.GetBullet();
-                bc.ResetData(vo.pos, vo.direct, vo.speed, vo.damage, true);
+                bc.ResetData(vo.socketId,vo.pos, vo.direct, vo.speed, vo.damage, true);
 
                 PlayerRPC rpc = GameManager.instance.GetPlayerRPC(vo.socketId);
 

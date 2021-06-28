@@ -43,7 +43,7 @@ public class SocketClient : MonoBehaviour
 
     public void ConnectSocket(string ip, string port)
     {
-        webSocket = new WebSocket($"{ip}:{port}");
+        webSocket = new WebSocket($"ws://{ip}:{port}");
         webSocket.Connect();
 
         //webSocketState.
